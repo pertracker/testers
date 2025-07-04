@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerTracker Tester</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-tertiary: #7D5260;
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-on-error: #FFFFFF;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-success: #4CAF50;
+            --md-sys-color-success-container: #E8F5E8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-surface) 100%);
+            min-height: 100vh;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 16px;
+            background: linear-gradient(45deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .language-selector {
+            background: var(--md-sys-color-surface);
+            border-radius: 28px;
+            padding: 8px;
+            display: inline-flex;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .lang-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.3);
+        }
+
+        .content-section {
+            background: var(--md-sys-color-surface);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .step {
+            margin-bottom: 32px;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step h3 {
+            color: var(--md-sys-color-primary);
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .primary-btn {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3);
+        }
+
+        .primary-btn:hover {
+            background: #5a47a0;
+            box-shadow: 0 8px 20px rgba(103, 80, 164, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .email-checker {
+            background: var(--md-sys-color-secondary-container);
+            border-radius: 20px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .email-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--md-sys-color-surface);
+            border: 2px solid var(--md-sys-color-outline);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+
+        .email-input-container:focus-within {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1);
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .email-suffix {
+            padding: 16px 20px 16px 0;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 1rem;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .check-btn {
+            width: 100%;
+            background: var(--md-sys-color-secondary);
+            color: var(--md-sys-color-on-secondary);
+            border: none;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .check-btn:hover {
+            background: #5a5570;
+            transform: translateY(-1px);
+        }
+
+        .result {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .result.success {
+            background: var(--md-sys-color-success-container);
+            color: var(--md-sys-color-success);
+        }
+
+        .result.error {
+            background: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-error);
+        }
+
+        .download-section {
+            text-align: center;
+            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            color: var(--md-sys-color-on-primary);
+            border-radius: 24px;
+            padding: 40px;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .download-section h3 {
+            color: inherit;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .download-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 16px 32px;
+            border-radius: 24px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .header h1 { font-size: 2.5rem; }
+            .content-section { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PerTracker Tester</h1>
+            <div class="language-selector">
+                <button class="lang-btn" onclick="switchLanguage('en')" data-lang="en">English</button>
+                <button class="lang-btn active" onclick="switchLanguage('de')" data-lang="de">Deutsch</button>
+            </div>
+        </div>
+
+        <!-- English Content -->
+        <div id="content-en" class="hidden">
+            <div class="content-section">
+                <div class="step">
+                    <h3><span class="step-number">1</span>Join the Group</h3>
+                    <p>Start by clicking this link to join our Google Group:</p>
+                    <br>
+                    <a href="https://groups.google.com/g/pertracker" class="primary-btn" target="_blank">
+                        <span class="material-icons">group_add</span>
+                        Join PerTracker Group
+                    </a>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Verify Membership</h3>
+                    <p>Test if you have successfully joined the group (enter your Gmail email):</p>
+                    
+                    <div class="email-checker">
+                        <div class="email-input-container">
+                            <input type="text" id="email" class="email-input" placeholder="Enter email" required>
+                            <span class="email-suffix">@gmail.com</span>
+                        </div>
+                        <button class="check-btn" onclick="checkEmail()">
+                            <span class="material-icons">verified_user</span>
+                            Check Membership
+                        </button>
+                        <div id="result"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <h3><span class="material-icons" style="vertical-align: middle; margin-right: 12px; font-size: 2rem;">download</span>Download the App</h3>
+                <p>Once you've confirmed your group membership, download the PerTracker app:</p>
+                <br>
+                <a href="https://play.google.com/store/apps/details?id=com.alex.pertracker" class="download-btn" target="_blank">
+                    <span class="material-icons">android</span>
+                    Download from Play Store
+                </a>
+            </div>
+        </div>
+
+        <!-- German Content -->
+        <div id="content-de">
+            <div class="content-section">
+                <div class="step">
+                    <h3><span class="step-number">1</span>Gruppe Beitreten</h3>
+                    <p>Fangen Sie an, indem Sie diesen Link anklicken:</p>
+                    <br>
+                    <a href="https://groups.google.com/g/pertracker" class="primary-btn" target="_blank">
+                        <span class="material-icons">group_add</span>
+                        PerTracker Gruppe Beitreten
+                    </a>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Mitgliedschaft Prüfen</h3>
+                    <p>Testen Sie, ob Sie der Gruppe richtig beigetreten sind (Gmail-E-Mail eingeben):</p>
+                    
+                    <div class="email-checker">
+                        <div class="email-input-container">
+                            <input type="text" id="email-de" class="email-input" placeholder="E-Mail eingeben" required>
+                            <span class="email-suffix">@gmail.com</span>
+                        </div>
+                        <button class="check-btn" onclick="checkEmailDE()">
+                            <span class="material-icons">verified_user</span>
+                            Mitgliedschaft Prüfen
+                        </button>
+                        <div id="result-de"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <h3><span class="material-icons" style="vertical-align: middle; margin-right: 12px; font-size: 2rem;">download</span>App Herunterladen</h3>
+                <p>Nachdem Sie wissen, dass Sie der Gruppe beigetreten sind, laden Sie die App herunter:</p>
+                <br>
+                <a href="https://play.google.com/store/apps/details?id=com.alex.pertracker" class="download-btn" target="_blank">
+                    <span class="material-icons">android</span>
+                    Aus Play Store Herunterladen
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQWvboHFHqXHhaCAlCmjrfuV-ZlggWyWImjj7573_9CmA6cTW3tz7PcCo3T9_W6SsPlg/exec';
+
+        function switchLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            document.getElementById('content-en').classList.toggle('hidden', lang !== 'en');
+            document.getElementById('content-de').classList.toggle('hidden', lang !== 'de');
+        }
+
+        async function checkEmail() {
+            await performEmailCheck('email', 'result', 'en');
+        }
+
+        async function checkEmailDE() {
+            await performEmailCheck('email-de', 'result-de', 'de');
+        }
+
+        async function performEmailCheck(inputId, resultId, lang) {
+            const username = document.getElementById(inputId).value.trim();
+            const result = document.getElementById(resultId);
+            
+            if (!username) {
+                showResult(result, lang === 'de' ? 'Bitte geben Sie eine E-Mail ein' : 'Please enter an email', 'error');
+                return;
+            }
+
+            // Remove @gmail.com if user typed it
+            const cleanUsername = username.replace('@gmail.com', '');
+            const email = cleanUsername + '@gmail.com';
+            
+            showResult(result, lang === 'de' ? 'Überprüfung läuft...' : 'Checking...', 'info');
+            
+            try {
+                const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    showResult(result, data.error, 'error');
+                } else if (data === true) {
+                    showResult(result, lang === 'de' ? `✓ ${email} ist in der PerTracker-Gruppe` : `✓ ${email} is in PerTracker group`, 'success');
+                } else {
+                    showResult(result, lang === 'de' ? `✗ ${email} nicht in der Gruppe gefunden` : `✗ ${email} not found in group`, 'error');
+                }
+            } catch (err) {
+                showResult(result, lang === 'de' ? 'Fehler beim Überprüfen der E-Mail' : 'Error checking email', 'error');
+            }
+        }
+
+        function showResult(element, message, type) {
+            element.innerHTML = `<div class="result ${type}">
+                <span class="material-icons">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+                ${message}
+            </div>`;
+        }
+
+        // Enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && (e.target.id === 'email' || e.target.id === 'email-de')) {
+                if (e.target.id === 'email') checkEmail();
+                if (e.target.id === 'email-de') checkEmailDE();
+            }
+        });
+    </script>
+</body>
+</html>
